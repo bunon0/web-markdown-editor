@@ -2,15 +2,26 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 
 import { useStateWithStorage } from "../hooks/useStateWithStorage";
+import { SaveButton } from "../components/SaveButton";
+import { putMemo } from "../indexedDb/memos";
 
 export const Editor: React.VFC = () => {
   const StorageKey = "pages/editor:text";
 
   const [text, setText] = useStateWithStorage("", StorageKey);
 
+  const saveMemo = (): void => {
+    putMemo("TITLE", text);
+  };
+
   return (
     <div>
-      <SHeader>MarkDown Editor</SHeader>
+      <SHeader>
+        MarkDown Editor
+        <SHeaderContainer>
+          <SaveButton onClick={saveMemo}>保存する</SaveButton>
+        </SHeaderContainer>
+      </SHeader>
       <SContainer>
         <STextArea
           value={text}
@@ -35,6 +46,15 @@ const SHeader = styled.header`
   position: fixed;
   right: 0;
   top: 0;
+  align-content: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const SHeaderContainer = styled.div`
+  height: 2rem;
+  display: flex;
+  align-content: center;
 `;
 
 const SContainer = styled.div`
@@ -67,6 +87,3 @@ const SPreview = styled.div`
   top: 0;
   width: 50vw;
 `;
-function StorageKey(StorageKey: any): string | (() => string) {
-  throw new Error("Function not implemented.");
-}
