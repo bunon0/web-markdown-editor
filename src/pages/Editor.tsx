@@ -6,6 +6,7 @@ import { useStateWithStorage } from "../hooks/useStateWithStorage";
 import { Button } from "../components/Button";
 import { putMemo } from "../indexedDb/memos";
 import { SaveModal } from "../components/SaveModal";
+import { Link } from "react-router-dom";
 
 export const Editor: React.VFC = () => {
   const StorageKey = "pages/editor:text";
@@ -21,6 +22,7 @@ export const Editor: React.VFC = () => {
         <SHeaderContainer>
           <Button onClick={() => setShowModal(true)}>保存する</Button>
         </SHeaderContainer>
+        <Link to="/history">履歴を見る</Link>
       </SHeader>
       <SContainer>
         <STextArea
