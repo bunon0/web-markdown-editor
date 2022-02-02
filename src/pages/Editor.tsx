@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ReactMarkdown from "react-markdown";
+
 import { useStateWithStorage } from "../hooks/useStateWithStorage";
 
 export const Editor: React.VFC = () => {
@@ -16,7 +18,9 @@ export const Editor: React.VFC = () => {
             setText(event.target.value);
           }}
         />
-        <SPreview>プレビューエリア</SPreview>
+        <SPreview>
+          <ReactMarkdown>{text}</ReactMarkdown>
+        </SPreview>
       </SContainer>
     </div>
   );
