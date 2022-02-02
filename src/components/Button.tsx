@@ -6,7 +6,7 @@ interface Props {
   onClick: () => void;
 }
 
-export const SaveButton: React.VFC<Props> = props => {
+export const Button: React.VFC<Props> = props => {
   return (
     <SButton onClick={props.onClick} className={props.cancel ? "cancel" : ""}>
       {props.children}
@@ -23,6 +23,7 @@ const SButton = styled.button`
   height: 2rem;
   min-width: 5rem;
   padding: 0 1rem;
+  cursor: pointer;
 
   &.cancel {
     background-color: white;

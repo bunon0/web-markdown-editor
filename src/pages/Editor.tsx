@@ -1,25 +1,25 @@
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
+import { useState } from "react";
 
 import { useStateWithStorage } from "../hooks/useStateWithStorage";
-import { SaveButton } from "../components/SaveButton";
+import { Button } from "../components/Button";
 import { putMemo } from "../indexedDb/memos";
+import { SaveModal } from "../components/SaveModal";
 
 export const Editor: React.VFC = () => {
   const StorageKey = "pages/editor:text";
 
   const [text, setText] = useStateWithStorage("", StorageKey);
 
-  const saveMemo = (): void => {
-    putMemo("TITLE", text);
-  };
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div>
       <SHeader>
         MarkDown Editor
         <SHeaderContainer>
-          <SaveButton onClick={saveMemo}>保存する</SaveButton>
+          <Button onClick={() => setShowModal(true)}>保存する</Button>
         </SHeaderContainer>
       </SHeader>
       <SContainer>
@@ -32,6 +32,15 @@ export const Editor: React.VFC = () => {
         <SPreview>
           <ReactMarkdown>{text}</ReactMarkdown>
         </SPreview>
+        {showModal && (
+          <SaveModal
+            onSave={(title: string): void => {
+              putMemo(title, text);
+              setShowModal(false);
+            }}
+            onCancel={() => setShowModal(false)}
+          />
+        )}
       </SContainer>
     </div>
   );
