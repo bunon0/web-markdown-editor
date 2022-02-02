@@ -1,24 +1,21 @@
-import { useState } from "react";
 import styled from "styled-components";
+import { useStateWithStorage } from "../hooks/useStateWithStorage";
 
 export const Editor: React.VFC = () => {
   const StorageKey = "pages/editor:text";
 
-  const [text, setText] = useState<string>(
-    localStorage.getItem(StorageKey) || ""
-  );
-
-  const changeText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const changedText = event.target.value;
-    localStorage.setItem(StorageKey, changedText);
-    setText(changedText);
-  };
+  const [text, setText] = useStateWithStorage("", StorageKey);
 
   return (
     <div>
       <SHeader>MarkDown Editor</SHeader>
       <SContainer>
-        <STextArea value={text} onChange={changeText} />
+        <STextArea
+          value={text}
+          onChange={event => {
+            setText(event.target.value);
+          }}
+        />
         <SPreview>プレビューエリア</SPreview>
       </SContainer>
     </div>
