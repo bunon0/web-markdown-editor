@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "../components/Button";
 import { putMemo } from "../indexedDb/memos";
 import { SaveModal } from "../components/SaveModal";
 import { Link } from "react-router-dom";
 import { Header } from "../components/Header";
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import ConvertMarkdownWorker from "worker-loader!../worker/convert_markdown_worker";
 
 interface Props {
   text: string;
@@ -16,6 +18,19 @@ interface Props {
 export const Editor: React.VFC<Props> = props => {
   const { text, setText } = props;
   const [showModal, setShowModal] = useState(false);
+  const [html, setHtml] = useState("");
+
+  const convertMarkdownWorker = new ConvertMarkdownWorker();
+
+  useEffect(() => {
+    convertMarkdownWorker.onmessage = event => {
+      setHtml(event.data.html);
+    };
+  }, [convertMarkdownWorker]);
+
+  useEffect(() => {
+    convertMarkdownWorker.postMessage(text);
+  }, [text, convertMarkdownWorker]);
 
   return (
     <div>
@@ -33,7 +48,7 @@ export const Editor: React.VFC<Props> = props => {
           }}
         />
         <SPreview>
-          <ReactMarkdown>{text}</ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: html }} />
         </SPreview>
         {showModal && (
           <SaveModal
