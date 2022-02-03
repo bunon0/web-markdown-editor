@@ -1,18 +1,35 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
+import styled from "styled-components";
+
+import { Header } from "../components/Header";
+import { Link } from "react-router-dom";
+
+const SHeaderWrapper = styled.div`
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
+`;
+
+const SContentWrapper = styled.div`
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 3rem;
+  padding: 0 1rem;
+`;
 
 export const History: React.VFC = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  let navigate = useNavigate();
-
-  const handleBackLink = () => {
-    navigate("/");
-  };
 
   return (
     <div>
-      <h1>History</h1>
-      <Button onClick={handleBackLink}>エディタに戻る</Button>
+      <SHeaderWrapper>
+        <Header title="履歴">
+          <Link to="/editor">エディタに戻る</Link>
+        </Header>
+      </SHeaderWrapper>
+      <SContentWrapper>TODO: 履歴表示</SContentWrapper>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { Button } from "../components/Button";
 import { putMemo } from "../indexedDb/memos";
 import { SaveModal } from "../components/SaveModal";
 import { Link } from "react-router-dom";
+import { Header } from "../components/Header";
 
 export const Editor: React.VFC = () => {
   const StorageKey = "pages/editor:text";
@@ -17,13 +18,12 @@ export const Editor: React.VFC = () => {
 
   return (
     <div>
-      <SHeader>
-        MarkDown Editor
-        <SHeaderContainer>
+      <SHeaderWrapper>
+        <Header title="MarkDown Editor">
           <Button onClick={() => setShowModal(true)}>保存する</Button>
-        </SHeaderContainer>
-        <Link to="/history">履歴を見る</Link>
-      </SHeader>
+          <Link to="/history">履歴を見る</Link>
+        </Header>
+      </SHeaderWrapper>
       <SContainer>
         <STextArea
           value={text}
@@ -48,32 +48,19 @@ export const Editor: React.VFC = () => {
   );
 };
 
-const SHeader = styled.header`
-  font-size: 1.5rem;
-  height: 2rem;
-  left: 0;
-  line-height: 2rem;
-  padding: 0.5rem 1rem;
-  position: fixed;
-  right: 0;
-  top: 0;
-  align-content: center;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const SHeaderContainer = styled.div`
-  height: 2rem;
-  display: flex;
-  align-content: center;
-`;
-
 const SContainer = styled.div`
   bottom: 0;
   left: 0;
   position: fixed;
   right: 0;
   top: 3rem;
+`;
+
+const SHeaderWrapper = styled.div`
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
 `;
 
 const STextArea = styled.textarea`
