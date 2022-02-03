@@ -2,18 +2,19 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 
-import { useStateWithStorage } from "../hooks/useStateWithStorage";
 import { Button } from "../components/Button";
 import { putMemo } from "../indexedDb/memos";
 import { SaveModal } from "../components/SaveModal";
 import { Link } from "react-router-dom";
 import { Header } from "../components/Header";
 
-export const Editor: React.VFC = () => {
-  const StorageKey = "pages/editor:text";
+interface Props {
+  text: string;
+  setText: (text: string) => void;
+}
 
-  const [text, setText] = useStateWithStorage("", StorageKey);
-
+export const Editor: React.VFC<Props> = props => {
+  const { text, setText } = props;
   const [showModal, setShowModal] = useState(false);
 
   return (
