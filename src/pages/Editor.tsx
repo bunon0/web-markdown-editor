@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 
 import { Button } from "../components/Button";
@@ -20,6 +19,7 @@ export const Editor: React.VFC<Props> = props => {
   const [showModal, setShowModal] = useState(false);
   const [html, setHtml] = useState("");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const convertMarkdownWorker = new ConvertMarkdownWorker();
 
   useEffect(() => {
